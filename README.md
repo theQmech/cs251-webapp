@@ -4,7 +4,9 @@ CS251 WebApp Project
 Contributors
 ------------
 Rupanshu Ganvir
+
 Sumith
+
 Shubham Goel
 
 Setting up environment
