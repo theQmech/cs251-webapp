@@ -1,0 +1,81 @@
+   /$$                                  /$$          
+  | $$                                 | $$          
+ /$$$$$$   /$$   /$$  /$$$$$$$ /$$$$$$$| $$  /$$$$$$ 
+|_  $$_/  | $$  | $$ /$$_____//$$_____/| $$ /$$__  $$
+  | $$    | $$  | $$|  $$$$$$|  $$$$$$ | $$| $$$$$$$$
+  | $$ /$$| $$  | $$ \____  $$\____  $$| $$| $$_____/
+  |  $$$$/|  $$$$$$/ /$$$$$$$//$$$$$$$/| $$|  $$$$$$$
+   \___/   \______/ |_______/|_______/ |__/ \_______/
+
+Group 00 - tussle - Web application
+=== LEAP OF FAITH ===
+Title inspired by InsIghT, IIT Bombay's official newsletter's branch change article.
+The name justifies the process involved.
+
+Note - If the view in your browser is cramped or distorted, please zoom out for proper experience
+----
+
+Backend
+=======
+We have made complete use of Django Model-View controller. Also, we used sqlite database and the latest django version. For other backend feautures, it will be best if one took a look at the code.
+
+UI
+==
+Feature: Used Materialize CSS for a very intuitive and beautiful UI.
+TestCases:
+- Visit the login, register, profile, update pages and the admin page
+- Observe the form fields, buttons etc and their responses.
+	Expected Behaviour: All pages should load up with pages custumized using Materialize CSS
+
+Landing Page
+============
+Feature: Has login with username and password, username is ldap and the option for password is generated at the time of registration. The password is stored as a hash key.
+- Try registering a new user for the first time using the Register here link
+	Expected Behaviour: Redirection to registration page 
+- Next try logging in using both a valid and invalid ldap, password combination.
+	Expected Behaviour: If the combination is invalid, user is redirected to the same page.
+- Finally, login using the credentials ldap="admin", password="admin". 		
+	Expected Behaviour: The'admin' 'superuser' and the 'admin' is redirected to the admin page
+	
+
+Registration Page
+=================
+Feature: A student can register as we maintain his details and preferences, by virtue of this we give him option to login later and update his preferences. Error validation is done using Django. Registration data is validated while making a new profile. The form doesn't accept submission until all fields have valid input, the errors being displayed below the fields. Also, we have tried to keep the form user-friendly. Error validation is done using Django, we find this more powerful than JavaScript error checking as this can be easily overrided by switching off JS in browser.
+- Register using all sorts of invalid fields such as: 
+	- Roll Number not starting with 15 or not having exactly 9 characters,
+	- CPI not lying between 0.0 and 10.0
+	- Name not being alphanumeric
+	Expected Behaviour: The submit button is deactivated and errors in form validation are shown in the form itself.
+- While entering data in registration form, try to select relevent input in Category and Current Branch
+	Expected Behaviour: User should be able to see drop down menus, so that he gets an idea ergarding what input is expected.
+- Register the user normally, one can come later and update his preferences
+	Expected Behaviour: User is created, logged in and is redirected to his profile page
+
+
+Profile Page
+============
+Feature: User can see his details, his prefernce list as well as update his list. Page also has a Log Out button. A profile can be seen only by its user itself and no one else.
+- Trying logging in using previously registered non-admin user. Note the 'url'
+	Expected Behaviour: Redirectionto user profile
+- Close this tab and open up the site in a new tab
+	Expected Behaviour: The session is still logged in
+- Now, log out and try viewing the profile by using the 'url' above
+	Expected Behaviour: User is denied view of profile and redirected
+
+Admin Page
+==========
+Featue: An admin can Import data as csv, Export input data as csv and also Download results as csv. Note the format of the input taken is that given the outlab resources folder.
+- Login using the admin credentials mentioned before(ldap: 'admin', password: 'admin') to visit this page.
+	Expected Behaviour: Redirection to the admin page where one has all the relevant features.
+
+
+Sessions
+========
+Feature: We have implemented sessions for users, in the sense that other urls are disabled and not accessible. Only the urls that the current user is supposed to access is possible.
+Try out the 'Profile Page' feature as well to see this feature better.
+- Login, close tab, and visit the site again.
+	Expected Behaviour: Session hasn't expired and user sees his profile page.
+- With a user logged in, try to view the profile of some other user.
+	Expected Behaviour: User is denied access to this profile.
+- One can play around and try to view someone's profile without knowing his login credentials.
+	Expected Behaviour: Non-admin simply fails! :)

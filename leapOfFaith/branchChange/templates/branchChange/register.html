@@ -1,0 +1,122 @@
+
+{% load staticfiles %}
+
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Register</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:300,700,400,500,600' rel='stylesheet' type='text/css'>
+  <link href="{% static "assets/css/materialize.css" %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<style type="text/css">
+	label {
+		width:100%;
+	}
+</style>
+  <!-- ==============BODY==============  -->
+<body id="meraBody">
+	<header>
+	</header>
+  <main>
+
+	<div class="container">
+
+
+<!-- {% block content%} -->
+		<div class="row center" style="padding: 5% 5% 5% 5%">
+			<h2 class="light">Leap of Faith</h2>
+			<h5 class="light">Register</h5>
+			<div class="divider"></div>
+		</div>
+
+		<div class="row">
+			<form action="/branchChange/register_request/" method="post" class="col l6 m6 s12 offset-l3 offset-m3">{%csrf_token%}
+				<div class="row">
+			        <div class="input-field col s6">
+						<input id="roll" name="roll" maxlength="9" type="text" class="validate {% if rollerror %}invalid{%endif%} " {%if roll %} value="{{roll}}" {%endif%}  required>
+						<label for="roll" {% if rollerror %} data-error="{{rollerror}}"{%endif%}>Roll Number</label>
+			        </div>
+
+			        <div class="input-field col s6">
+						<input id="cpi" name="cpi" maxlength="5" type="text" class="validate {% if cpierror %}invalid{%endif%} " {%if cpi %} value="{{cpi}}" {%endif%}  required>
+						<label for="cpi" {% if cpierror %} data-error="{{cpierror}}"{%endif%}>CPI</label>
+			        </div>
+		        </div>
+				<div class="row">
+					<div class="input-field col s12">
+						<input id="name" name="name" type="text" class="validate {% if nameerror %}invalid{%endif%} " {%if name %} value="{{name}}" {%endif%}  required>
+						<label for="name" {% if nameerror %} data-error="{{nameerror}}"{%endif%}>Name</label>
+					</div>
+		        </div>
+				<div class="row">
+			        <div class="input-field col s12">
+						<input id="password" name="password" type="password" class="validate {% if passworderror %}invalid{%endif%} " {%if password %} value="{{password}}" {%endif%}  required>
+						<label for="password" {% if passworderror %} data-error="{{passworderror}}"{%endif%}>Password</label>
+			        </div>
+		        </div>
+				<div class="row">
+			        <div class="input-field col s2">
+						<label for="branch">Branch</label>
+			        </div>
+			        <div class="input-field col s4">
+						<select id="branch" name="branch">
+							{% for program in programs%}
+							<option value="{{program.name}}" {% if branch == program.name%} selected {%endif%} >{{program.name}}</option>
+							}
+							{%endfor%}
+						</select>
+			        </div>
+			        <div class="input-field col s2">
+						<label for="category">Category</label>
+					</div>
+			        <div class="input-field col s4">
+						<select id="category" name="category">
+							<option value="GE" {% if category == "GE"%} selected {%endif%} >GE</option>
+							<option value="SC" {% if category == "SC"%} selected {%endif%} >SC</option>
+							<option value="ST" {% if category == "ST"%} selected {%endif%} >ST</option>
+							<option value="OBC" {% if category == "OBC"%} selected {%endif%} >OBC</option>
+							<option value="PwD" {% if category == "PwD"%} selected {%endif%} >PwD</option>
+						</select>
+			        </div>
+		        </div>
+				<br><br>
+				<center id="buttons">
+					<button class="btn waves-effect waves-light" type="submit" name="action" >Register<i class="material-icons right">send</i></button>
+				</center>
+			</form>
+		</div>
+		<div class="row">
+			<div class="col l6 m6 s12 offset-l3 offset-m3">
+				<p class="center">
+					Already a User? Login <a href="/">here</a>
+				</p>
+			</div>
+		</div>
+<!-- {% endblock %} -->
+
+	</div>
+  </main>
+
+  <!--  Scripts-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+		<script src="{% static "assets/js/materialize.js" %}"static/assets/js/materialize.js></script>
+		<script>
+			var bd = document.getElementById('meraBody');
+			bd.onload = function(){
+				$("select").css("display", "block");
+				// alert("init");
+			}
+			// $(document).ready(function(){
+			// 	$("select").material_select();
+			// 	alert("init");
+			// })
+		</script>
+  </body>
+</html>

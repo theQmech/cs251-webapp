@@ -1,0 +1,161 @@
+{% load staticfiles %}
+
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Update</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:300,700,400,500,600' rel='stylesheet' type='text/css'>
+  <link href="{% static "assets/css/materialize.css" %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</head>
+
+<style type="text/css">
+	#personal-details th {
+		text-align: right;
+		/*width: 45%;*/
+		padding: 25px 25px 25px 0px;
+  		border-radius: 2px;
+	}
+	#personal-details td {
+		text-align: left;
+  		/*border-radius: 2px;*/
+		/*width: 45%;*/
+		padding: 25px 0px 25px 25px;
+	}
+	.hidden {
+		display: none;
+	}
+	label {
+		width:100%;
+	}
+</style>
+  <!-- ==============BODY==============  -->
+<body id="meraBody">
+	<header>
+	</header>
+  <main>
+
+	<div class="container">
+
+
+<!-- {% block content%} -->
+		<div class="row center" style="padding: 5% 5% 5% 5%">
+			<h2 class="light">Leap of Faith</h2>
+		</div>
+
+		<div class="row">
+			<table id="personal-details" class="responsive-table striped">
+				<!-- <thead>
+					<tr>
+						<th data-field="id">Name</th>
+						<th data-field="name">Item Name</th>
+						<th data-field="price">Item Price</th>
+					</tr>
+				</thead> -->
+				<tbody>
+					<tr>
+						<th>Roll Number</th>
+						<td>{{user.roll}}</td>
+					</tr>
+					<tr>
+						<th>Name</th>
+						<td>{{user.name}}</td>
+					</tr>
+					<tr>
+						<th>CPI</th>
+						<td>{{user.cpi}}</td>
+					</tr>
+					<tr>
+						<th>Current Branch</th>
+						<td>{{user.allotted.name}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="divider"></div>
+		<!-- <div class="center"> -->
+		<!-- <a class="waves-effect waves-light btn-large">Update</a> -->
+		<!-- </div> -->
+		<div class="row">
+			<div class="col s12 m6 l4 offset-l4 offset-m3">
+				<br> 
+				<h5>Choose Desired Branches</h5>
+				<p><strong>{{errors}}</strong></p>
+				<label>Select Preferences from highest to lowest</label>
+				<br>
+				<form action="save" method="post">
+				{%csrf_token%}
+					{%for pref in preferences%}
+					<div class="input-field {% if forloop.counter > total%} hidden{%endif%}" id="div{{forloop.counter}}">
+						<select id="sel{{forloop.counter}}" name="sel{{forloop.counter}}">
+							<option value="" {% if pref.name == ""%} selected {%endif%} >Choose your option</option>
+							{%for program in programmes %}
+							<option value="{{program.name}}" {% if pref.name == program.name%} selected {%endif%}>{{program.name}}</option>
+							{% endfor %}
+						</select>
+					</div>
+					{%endfor%}
+					<a class="btn-floating waves-effect waves-light red" id="addButton" onclick="addClicked()"><i class="tiny material-icons">add</i></a>
+					<br><br>
+					<center id="buttons">
+						<button class="btn waves-effect waves-light" type="submit" name="action" >Submit<i class="material-icons right">send</i></button>
+						<br><br>
+						<button class="btn waves-effect waves-light" name="action" href="/branchChange/{{user.roll}}">Cancel<i class="material-icons right">delete</i></button>
+					</center>
+				</form>
+			</div>
+		</div>
+		<!-- <div class="row">
+			<div class="col s6 m3 l2 offset-l4 offset-m4 offset-s3">
+				<button class="btn waves-effect waves-light" type="submit" name="action">Submit<i class="material-icons right">send</i></button>
+			</div>
+			<div class="col s6 m3 l2">
+				<button class="btn waves-effect waves-light" type="submit" name="action">Cancel<i class="material-icons right">delete</i></button>
+			</div>
+		</div> -->
+
+<!-- {% endblock %} -->
+
+	</div>
+  </main>
+
+  <!--  Scripts-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+		<script src="{% static "assets/js/materialize.js" %}"static/assets/js/materialize.js></script>
+
+		<script>
+			var count = {{total}};
+			// alert("sel"+count);
+
+			var add = document.getElementById('addButton');
+			add.onclick = function(){
+				if(count<14){
+					count++;
+					// alert("sel"+count);
+					// document.getElementById("sel"+count).style.display='block';
+					// document.getElementById("sel"+count).addClass('hidden');
+					var d = document.getElementById("div"+count);
+					d.className = d.className - "hidden";
+				}
+			}
+
+		</script>
+		<script>
+			var bd = document.getElementById('meraBody');
+			bd.onload = function(){
+				$("select").css("display", "block");
+				// alert("init");
+			}
+			// $(document).ready(function(){
+			// 	$("select").material_select();
+			// 	alert("init");
+			// })
+		</script>
+	</body>
+</html>

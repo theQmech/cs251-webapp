@@ -1,0 +1,165 @@
+{% load staticfiles %}
+
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Admin</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:300,700,400,500,600' rel='stylesheet' type='text/css'>
+  <link href="{% static "assets/css/materialize.css" %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</head>
+
+<style type="text/css">
+	label {
+		width:100%;
+	}
+</style>
+  <!-- ==============BODY==============  -->
+<body id="meraBody">
+	<header>
+	</header>
+  <main>
+
+	<div class="container">
+		<div class="row center" style="padding: 5% 5% 5% 5%">
+			<h2 class="light">Leap of Faith</h2>
+			<h5 class="light"> The Admin </h5>
+				<div class="divider"></div>
+		</div>
+		<!-- <div class="center"> -->
+		<!-- <a class="waves-effect waves-light btn-large">Update</a> -->
+		<!-- </div> -->
+		<div class="row">
+			<div class="col s12 m8 l8 offset-l2 offset-m2">
+					<center id="buttons">
+					 <ul class="collapsible" data-collapsible="accordion">
+					    <li>
+					      <div class="collapsible-header"><i class="material-icons">call_made</i>Import data as csv</div>
+					      <div class="collapsible-body">
+
+					      <div class="container">
+					      	<form enctype="multipart/form-data" method="post"action="/branchChange/Upload/">
+					      	{% csrf_token %}
+						    <div class="file-field input-field">
+						      <div class="btn">
+						        <span>File</span>
+						        <input type="file" name="options"  id="options">
+						      </div>
+						      <div class="file-path-wrapper">
+						        <input class="file-path validate" type="text" placeholder="Student data ">
+						      </div>
+						    </div>
+						    <div class="file-field input-field">
+						      <div class="file-field input-field">
+						      <div class="btn">
+						        <span>File</span>
+						        <input type="file" name="programmes"  id="programmes">
+						      </div>
+						      <div class="file-path-wrapper">
+						        <input class="file-path validate" type="text" placeholder="Branch data">
+						      </div>
+						     
+						    </div>
+						    <div class="center">
+						    <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+							    <i class="material-icons right">send</i>
+							 </button>
+							 </div>
+							 <br><br><br><br>
+						  </form>
+        
+						  </div>
+
+					      </div>
+					    </li>
+					    <li>
+					      <div class="collapsible-header"><i class="material-icons">call_received</i>Export data as csv</div>
+						<div class="collapsible-body"> 
+						
+					      	<div class= "container"><br>
+					      	   	<form method="get" action="/branchChange/idownload/"><button class="btn waves-effect waves-light" type="submit" name="action">Export
+							    <i class="material-icons right">open_in_browser</i>
+								</button>
+								</form>
+							 </div>
+						  </div>
+					    </li>
+					    <!-- <li>
+					      <div class="collapsible-header"><i class="material-icons">list</i>Display results</div>
+					      <div class="collapsible-body"> 
+					      	<div class= "container"><br><button class="btn waves-effect waves-light" type="submit" name="action">View in browser
+							    <i class="material-icons right">send</i>
+							 </button>
+							 </div>
+							 <br>
+						  </div>
+					    </li> -->
+					    <li>
+					      <div class="collapsible-header"><i class="material-icons">open_in_browser</i>Download results as csv</div>
+					      <div class="collapsible-body"> 
+					      	<div class= "container"><br>
+							 <form method="get" action="/branchChange/download/">
+							 <button class="btn waves-effect waves-light" type="submit" > Download
+							    <i class="material-icons right">open_in_browser</i>
+							 </button>
+							</form>
+							 </div>
+							 <br>
+							</div>
+					    </li>
+					  </ul>
+					</center>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col s12 l12 m12">
+				<div class="center">
+					<a class="waves-effect waves-light btn-large" href="logout">
+						Log Out
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+  </main>
+
+  <!--  Scripts-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+		<script src="{% static "assets/js/materialize.js" %}"static/assets/js/materialize.js></script>
+
+		<script>
+			var count = {{total}};
+			// alert("sel"+count);
+
+			var add = document.getElementById('addButton');
+			add.onclick = function(){
+				if(count<14){
+					count++;
+					// alert("sel"+count);
+					// document.getElementById("sel"+count).style.display='block';
+					// document.getElementById("sel"+count).addClass('hidden');
+					var d = document.getElementById("div"+count);
+					d.className = d.className - "hidden";
+				}
+			}
+
+		</script>
+		<script>
+			var bd = document.getElementById('meraBody');
+			bd.onload = function(){
+				$("select").material_select();
+				// alert("init");
+			}
+			// $(document).ready(function(){
+			// 	$("select").material_select();
+			// 	alert("init");
+			// })
+		</script>
+	</body>
+</html>
